@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Apology Grand Prix 🏎️</title>
+<link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,400;0,700;1,900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0e0e13;--panel:#1a1a22;--ink:#f4f4f8;--mute:#a4a4b8;--red:#e10600;--gold:#ffd54f;--line:#2e2e3a;color-scheme:dark;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;padding:70px 0 40px;background:var(--bg) radial-gradient(#1c1c25 1px,transparent 1.5px) 0 0/7px 7px;color:var(--ink);font-family:"Titillium Web","Trebuchet MS",system-ui,sans-serif;line-height:1.5;text-align:center;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:#0a0a0f;z-index:30}
+#lines{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+#lines i{position:absolute;height:2px;background:linear-gradient(90deg,transparent,#ffffff55);right:-200px;animation:ln linear infinite}
+@keyframes ln{to{transform:translateX(-130vw)}}
+.hud{position:fixed;top:0;left:0;right:0;z-index:31;display:flex;align-items:center;gap:12px;padding:calc(env(safe-area-inset-top,0px) + 8px) 14px 8px;background:#0a0a0fee;border-bottom:3px solid var(--red)}
+.hud b{font-style:italic;font-weight:900;white-space:nowrap}
+.trk{flex:1;height:6px;background:var(--line);border-radius:9px;position:relative}
+.trk u{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--red);border-radius:9px;transition:width .8s}
+.trk span{position:absolute;top:-10px;left:0;font-size:1.1rem;transition:left .8s;transform:translateX(-50%)}
+.hud button{padding:4px 10px;background:var(--panel);color:var(--ink);box-shadow:none;font-size:1rem}
+.kerb{position:fixed;left:0;right:0;bottom:0;height:calc(14px + env(safe-area-inset-bottom,0px));z-index:31;background:repeating-linear-gradient(90deg,var(--red) 0 24px,#fff 24px 48px);background-size:48px 100%;animation:kb .5s linear infinite}
+@keyframes kb{to{background-position:-48px 0}}
+main{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:10px 16px}
+h1{font-size:2.4rem;line-height:1;margin:8px 0;font-style:italic;font-weight:900;text-transform:uppercase;letter-spacing:-1px}
+h1 em{color:var(--red);font-style:italic}
+h2{font-size:1.35rem;margin:6px 0 10px;font-style:italic;font-weight:900;text-transform:uppercase}
+.panel{background:var(--panel);border:1px solid var(--line);border-left:6px solid var(--red);border-radius:6px 22px 6px 22px;padding:18px;margin:14px 0;box-shadow:0 10px 30px #0009;position:relative;overflow:hidden}
+.tag{display:inline-block;background:var(--red);color:#fff;font-weight:900;font-style:italic;font-size:.8rem;padding:2px 18px 2px 10px;clip-path:polygon(0 0,100% 0,88% 100%,0 100%);letter-spacing:1px}
+.stage{display:none}.stage.on{display:block;animation:in .6s cubic-bezier(.2,1.2,.4,1)}
+@keyframes in{from{opacity:0;transform:translateX(60px) skewX(-8deg)}to{opacity:1;transform:none}}
+button{font:inherit;font-weight:900;font-style:italic;text-transform:uppercase;border:0;padding:12px 28px;cursor:pointer;transition:transform .15s;clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%)}
+button:active{transform:scale(.93)}
+.btn{background:var(--red);color:#fff}.btn2{background:#fff;color:#111}
+.row{display:flex;gap:16px;justify-content:center;align-items:center;margin-top:14px;flex-wrap:wrap}
+.lights{display:flex;gap:10px;justify-content:center;background:#000;border:2px solid var(--line);padding:14px 18px;border-radius:14px;width:max-content;margin:14px auto}
+.lights i{width:34px;height:34px;border-radius:50%;background:#2a2a30;transition:.15s}
+.lights i.on{background:var(--red);box-shadow:0 0 16px var(--red)}
+.lights.off i{background:#222;box-shadow:none}
+.road{height:46px;position:relative;margin:6px 0;border-bottom:3px dashed #444;overflow:hidden}
+.road svg{position:absolute;left:0;bottom:2px;width:84px;height:30px;animation:drive 3.2s cubic-bezier(.5,0,.5,1) infinite}
+@keyframes drive{0%{transform:translateX(-90px)}100%{transform:translateX(calc(100vw))}}
+.gif{width:100%;max-width:260px;aspect-ratio:1/1;margin:8px auto;border-radius:14px;overflow:hidden;background:#101016;border:2px dashed #555;display:flex}
+.gif img{width:100%;height:100%;object-fit:cover;display:none}
+.gif .ph{margin:auto;display:flex;flex-direction:column;color:var(--mute);font-weight:700;font-size:.85rem}
+.sad{font-size:2.4rem;animation:wob 1.1s ease-in-out infinite}
+@keyframes wob{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg) scale(1.1)}}
+.plea{font-weight:700;min-height:48px}
+.env{position:relative;width:min(300px,80vw);aspect-ratio:3/2;margin:34px auto 10px;cursor:pointer;filter:drop-shadow(0 16px 18px #000a);animation:bob 2.2s ease-in-out infinite;transition:opacity .5s,transform .5s}
+@keyframes bob{50%{transform:translateY(-10px) rotate(-1.5deg)}}
+.env>*{position:absolute}
+.e-back{inset:0;background:#7a0a10;border-radius:8px}
+.e-paper{left:8%;right:8%;top:6%;bottom:8%;background:repeating-linear-gradient(#fff 0 18px,#ddd 18px 19px);border-radius:4px;transition:transform .9s .5s;z-index:1}
+.e-l,.e-r,.e-b{inset:0;z-index:2}
+.e-l{background:#c8101a;clip-path:polygon(0 0,52% 56%,0 100%)}
+.e-r{background:#d9141f;clip-path:polygon(100% 0,48% 56%,100% 100%)}
+.e-b{background:#e10600;clip-path:polygon(0 100%,50% 42%,100% 100%)}
+.e-chk{left:0;right:0;bottom:0;height:13px;z-index:3;border-radius:0 0 8px 8px;background:repeating-conic-gradient(#000 0 25%,#fff 0 50%) 0 0/13px 13px}
+.e-flap{left:0;right:0;top:0;height:58%;background:linear-gradient(#ff3b3b,#e10600);clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;transition:transform .6s;z-index:4}
+.seal{left:50%;top:48%;width:48px;height:48px;margin:-24px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#fff7c2,var(--gold) 55%,#a57600);display:grid;place-items:center;font-size:1.4rem;z-index:5;animation:pl 1.2s infinite;transition:.3s}
+@keyframes pl{50%{box-shadow:0 0 22px var(--gold)}}
+.env.open{animation:none}
+.env.open .e-flap{transform:rotateX(180deg);z-index:0}
+.env.open .e-paper{transform:translateY(-58%)}
+.env.open .seal{opacity:0;transform:scale(0)}
+.env.gone{opacity:0;transform:scale(.8) translateY(40px)}
+.hint{color:var(--gold);font-weight:900;letter-spacing:2px;animation:bl 1s infinite}
+@keyframes bl{50%{opacity:.3}}
+.letter{text-align:left;white-space:pre-wrap;background:#fffdf7;color:#222;border-left-color:var(--red);display:none}
+.letter.on{display:block;animation:in .7s cubic-bezier(.2,1.2,.4,1)}
+.letter::before{content:"";position:absolute;left:0;right:0;top:0;height:10px;background:repeating-conic-gradient(#000 0 25%,#fff 0 50%) 0 0/10px 10px}
+.letter .tag{margin-top:8px}
+input{font:inherit;font-weight:700;width:100%;max-width:260px;padding:12px;border-radius:4px;border:2px solid var(--red);background:#000;color:var(--gold);text-align:center;letter-spacing:3px}
+.shake{animation:sh .4s}
+@keyframes sh{20%,60%{transform:translateX(-9px)}40%,80%{transform:translateX(9px)}}
+#perr{color:var(--red);font-weight:900;min-height:28px;margin:8px 0}
+.p1{font-size:5rem;font-style:italic;font-weight:900;color:var(--gold);line-height:1;animation:gl 1.2s infinite alternate}
+@keyframes gl{from{text-shadow:0 0 8px var(--gold)}to{text-shadow:0 0 30px var(--gold),0 0 60px var(--red)}}
+.vwrap{width:100%;max-width:330px;aspect-ratio:3/4;margin:0 auto;border-radius:12px;overflow:hidden;background:#000}
+.vwrap video{width:100%;height:100%;object-fit:cover;display:block}
+.vph{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;border:2px dashed #555;border-radius:12px;color:var(--mute);font-weight:700}
+#wipe{position:fixed;inset:0;z-index:40;pointer-events:none;background:repeating-conic-gradient(#000 0 25%,#fff 0 50%) 0 0/60px 60px;transform:translateX(-101%)}
+#wipe.go{animation:wp .8s ease-in-out}
+@keyframes wp{0%{transform:translateX(-101%)}50%{transform:translateX(0)}100%{transform:translateX(101%)}}
+.sub{color:var(--mute);margin:0}
+.flagbar{height:44px;margin:14px -18px;background:repeating-conic-gradient(#000 0 25%,#fff 0 50%) 0 0/22px 22px;animation:fb 1s linear infinite}
+@keyframes fb{to{background-position:44px 0}}
+.wave{font-size:4.5rem;display:inline-block;transform-origin:bottom left;animation:wv 1.2s ease-in-out infinite}
+@keyframes wv{0%,100%{transform:rotate(-12deg)}50%{transform:rotate(12deg)}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute"><symbol id="car" viewBox="0 0 124 42">
+<path d="M6 28 18 22 40 20 52 10h18l6 8 24 2 16 6v4H6z" fill="#e10600"/><path d="M52 10h18l6 8H46z" fill="#fff" opacity=".25"/>
+<circle cx="61" cy="12" r="4.5" fill="#ffd54f"/><rect x="3" y="10" width="13" height="4" fill="#fff"/><rect x="8" y="14" width="2" height="10" fill="#fff"/><rect x="102" y="29" width="20" height="3.5" fill="#fff"/>
+<circle cx="30" cy="31" r="9" fill="#111" stroke="#555" stroke-width="2"/><circle cx="30" cy="31" r="3" fill="#ccc"/><circle cx="92" cy="31" r="9" fill="#111" stroke="#555" stroke-width="2"/><circle cx="92" cy="31" r="3" fill="#ccc"/></symbol></svg>
+<div id="lines"></div>
+<div class="hud"><b id="lap">GRID</b><div class="trk"><u id="fill"></u><span id="mini">🏎️</span></div><button id="mus" title="Music">🎵</button></div>
+<div class="kerb"></div><div id="wipe"></div>
+<audio id="bgm" loop preload="none"></audio>
+
+<main>
+<!-- GRID -->
+<section class="stage on" id="s0">
+  <div class="road"><svg><use href="#car"/></svg></div>
+  <h1>An Apology<br><em>Grand Prix</em></h1>
+  <p class="sub">Baby, this race is all for you 🏁</p>
+  <div class="lights" id="lights"><i></i><i></i><i></i><i></i><i></i></div>
+  <button class="btn" id="start">Start engine 🔊</button>
+</section>
+
+<!-- LAP 1 -->
+<section class="stage" id="s1">
+  <div class="panel">
+    <span class="tag">RACE CONTROL</span>
+    <h2>Hello baby, Will you accept my apology?</h2>
+    <div class="gif" id="gif1"><img alt=""><div class="ph"><span>🎞️ GIF PLACEHOLDER</span><small></small></div></div>
+    <div class="sad" id="sad1">🥺</div>
+    <div class="plea" id="plea1">Please? I’ve been practising this all lap.</div>
+    <div class="row"><button class="btn" id="yes1">Yes 💚</button><button class="btn2" id="no1">No 💔</button></div>
+  </div>
+</section>
+
+<!-- LAP 2 -->
+<section class="stage" id="s2">
+  <h1>Incoming <em>message</em> 📻</h1>
+  <div class="env" id="env"><div class="e-back"></div><div class="e-paper"></div><div class="e-l"></div><div class="e-r"></div><div class="e-b"></div><div class="e-chk"></div><div class="e-flap"></div><div class="seal">🏁</div></div>
+  <p class="hint" id="tap">TAP TO OPEN</p>
+  <div class="panel letter" id="letter">
+    <span class="tag">TEAM RADIO</span>
+<div id="letterText">First of all, I know this is kinda cheesy, corny and cringe for u 😭 tatawanan mo talaga me so hard for this for real. Judge me nalang talaga. Bati na tayooo pls. Kiss ko ikaw dami.</div>
+    <div class="row"><button class="btn" id="next2">Next lap 🏁</button></div>
+  </div>
+</section>
+
+<!-- LAP 3 -->
+<section class="stage" id="s3">
+  <div class="road"><svg><use href="#car"/></svg></div>
+  <div class="panel">
+    <span class="tag">ONE MORE THING…</span>
+    <div style="text-align:left;font-weight:700;margin:6px 0 10px"><p style="margin:4px 0">Applicant: Me, obviously HAHAHA</p><p style="margin:4px 0">Position applied for: Your date.</p></div>
+    <h2>Would you approve my application for a date with you?</h2>
+    <div class="gif" id="gif3"><img alt=""><div class="ph"><span>🎞️ GIF PLACEHOLDER</span><small></small></div></div>
+    <div class="sad" id="sad3">🥹</div>
+    <div class="plea" id="plea3">I promise to be on pole position all night.</div>
+    <div class="row"><button class="btn" id="yes3">Yes 💚</button><button class="btn2" id="no3">No 💔</button></div>
+  </div>
+</section>
+
+<!-- PASSWORD -->
+<section class="stage" id="s4">
+  <div class="panel">
+    <span class="tag">PIT LANE ACCESS</span>
+    <h2>Yay! Enter the secret code</h2>
+    <p class="sub">Hint: efd</p><br>
+    <input id="pw" placeholder="PASSWORD" autocomplete="off" autocapitalize="none">
+    <div id="perr"></div>
+    <button class="btn" id="go">Unlock 🔓</button>
+  </div>
+</section>
+
+<!-- FINISH -->
+<section class="stage" id="s5">
+  <div class="p1">P1</div>
+  <h1><em>Chequered</em> flag! 🏆</h1>
+  <div class="panel">
+    <div class="vwrap" id="vbox"><div class="vph"><span>🎬 VIDEO PLACEHOLDER</span><small>3:4 size · set VIDEO_SRC</small></div></div>
+    <h2 style="margin-top:16px">Simply lovely!</h2>
+    
+    <div class="row"><button class="btn2" id="close5">Close ✕</button></div>
+  </div>
+  <div class="road"><svg><use href="#car"/></svg></div>
+</section>
+<!-- THANK YOU -->
+<section class="stage" id="s6">
+  <div class="wave">🏁</div>
+  <div class="panel">
+    <div class="flagbar"></div>
+    <h1>Thank you <em>💗</em></h1>
+    <h2>See you on our date!</h2>
+    <p>😘😘😘</p>
+    <div class="flagbar"></div>
+    <p class="sub">Lights out and away we go, baby 🏎️</p>
+  </div>
+</section>
+</main>
+
+<script>
+/* ====== EDIT THESE ====== */
+var PASSWORD="babymome";
+var VIDEO_SRC="video.mp4";
+var BGM_SRC="bgm.mp3";
+var GIF={ask1:"ask1.gif", sad1:"sad1.gif", ask3:"ask3.gif", sad3:"sad3.gif"};
+   // gif files
+/* ======================== */
+function $(i){return document.getElementById(i)}
+var LAPS={s0:["GRID",0],s1:["LAP 1/3",15],s2:["LAP 2/3",42],s3:["LAP 3/3",68],s4:["FINAL LAP",85],s5:["FINISH",100],s6:["FINISH",100]};
+function show(id){
+ var w=$('wipe');w.classList.remove('go');void w.offsetWidth;w.classList.add('go');
+ setTimeout(function(){
+  document.querySelectorAll('.stage').forEach(function(s){s.classList.remove('on')});
+  $(id).classList.add('on');window.scrollTo(0,0);
+  var l=LAPS[id];$('lap').textContent=l[0];$('fill').style.width=l[1]+'%';$('mini').style.left=l[1]+'%';
+ },400);
+}
+function rain(list){for(var i=0;i<30;i++){(function(i){var s=document.createElement('div');s.textContent=list[i%list.length];
+ s.style.cssText='position:fixed;top:-30px;left:'+Math.random()*100+'vw;font-size:'+(18+Math.random()*20)+'px;z-index:35;pointer-events:none;transition:transform '+(2+Math.random()*1.5)+'s linear,opacity 3s';
+ document.body.appendChild(s);
+ setTimeout(function(){s.style.transform='translateY('+(window.innerHeight+60)+'px) rotate(400deg)';s.style.opacity='0'},30);
+ setTimeout(function(){s.remove()},4200)})(i)}}
+/* speed lines */
+for(var k=0;k<14;k++){var d=document.createElement('i');d.style.cssText='top:'+Math.random()*100+'%;width:'+(60+Math.random()*140)+'px;animation-duration:'+(.7+Math.random()*1.4)+'s;animation-delay:-'+Math.random()*2+'s;opacity:'+(.2+Math.random()*.4);$('lines').appendChild(d)}
+/* gifs */
+function setGif(n,src,label){var g=$('gif'+n),im=g.querySelector('img'),ph=g.querySelector('.ph');
+ if(src){im.src=src;im.style.display='block';ph.style.display='none';g.style.border='0'}
+ else{im.style.display='none';ph.style.display='flex';ph.querySelector('small').textContent=label}}
+setGif(1,GIF.ask1,'(GIF.ask1)');setGif(3,GIF.ask3,'(GIF.ask3)');
+/* music */
+var bgm=$('bgm'),on=false;
+function music(v){try{if(!BGM_SRC){return}if(!bgm.getAttribute('src'))bgm.src=BGM_SRC;on=v;if(v){bgm.volume=.5;var pr=bgm.play();if(pr&&pr.catch)pr.catch(function(){})}else bgm.pause();$('mus').textContent=v?'🎵':'🔇'}catch(e){}}
+$('mus').onclick=function(){if(!BGM_SRC){$('mus').textContent='🔇';return}music(!on)};
+/* grid lights */
+var L=document.querySelectorAll('#lights i'),started=false;
+$('start').onclick=function(){
+ if(started)return;started=true;music(true);var n=0;
+ var t=setInterval(function(){
+  if(n<5){L[n].className='on';n++}
+  else{clearInterval(t);setTimeout(function(){$('lights').className='lights off';show('s1')},350)}
+ },550);
+};
+/* pleading */
+function plead(n,sad,pleas,emo,gifKey){
+ var c=0,no=$('no'+n),yes=$('yes'+n);
+ no.onclick=function(){c++;
+  $('sad'+n).textContent=emo[(c-1)%emo.length];
+  $('plea'+n).textContent=pleas[Math.min(c-1,pleas.length-1)];
+  setGif(n,GIF[gifKey],'(GIF.'+gifKey+')');
+  no.style.transform='scale('+Math.max(.5,1-c*.09)+')';
+  yes.style.transform='scale('+Math.min(1.5,1+c*.1)+')';
+ };
+}
+plead(1,0,['Aww, please? I’m really, truly sorry 🥺','I’ll be extra good, promise! 🙏','Look at this sad little face… 😭','I’ll bring snacks 🍫 please say yes?','The Yes button keeps getting bigger… 💚','Just press Yes, I know you want to 😿'],['😢','🥺','😭','🐶','🙏','😿'],'sad1');
+plead(3,0,['Pretty please? I’ll plan everything 🥹','One lap of dinner, that’s all! 🍽️','My heart just went into the gravel trap 💔','You can pick the place 🥺','Yes is right there, so big and shiny 💚','Please? 🐶'],['🥹','😭','😿','🥺','💔','🐶'],'sad3');
+$('yes1').onclick=function(){rain(['💗','🏁','✨','💌']);setTimeout(function(){show('s2')},700)};
+/* envelope */
+$('env').onclick=function(){
+ var e=$('env');if(e.classList.contains('open'))return;
+ e.classList.add('open');$('tap').style.display='none';
+ setTimeout(function(){e.classList.add('gone')},1700);
+ setTimeout(function(){e.style.display='none';$('letter').classList.add('on');$('letter').scrollIntoView({behavior:'smooth',block:'center'})},2200);
+};
+$('next2').onclick=function(){show('s3')};
+$('yes3').onclick=function(){rain(['💗','🏎️','🌹','✨']);setTimeout(function(){show('s4')},700)};
+/* password */
+function unlock(){
+ if($('pw').value.trim().toLowerCase()===PASSWORD.toLowerCase()){
+  if(VIDEO_SRC)$('vbox').innerHTML='<video src="'+VIDEO_SRC+'" controls playsinline autoplay></video>';
+  show('s5');setTimeout(function(){rain(['🏆','🏁','🏎️','💗','🍾'])},800);
+ }else{$('perr').textContent='Wrong code, back to the pits 🛞';var p=$('pw');p.classList.remove('shake');void p.offsetWidth;p.classList.add('shake')}
+}
+$('close5').onclick=function(){var v=document.querySelector('#vbox video');if(v)v.pause();show('s6');setTimeout(function(){$('vbox').innerHTML='';rain(['💗','🏁','🏎️','✨'])},800)};
+$('go').onclick=unlock;$('pw').onkeydown=function(e){if(e.key==='Enter')unlock()};
+</script>
+</body>
+</html>
